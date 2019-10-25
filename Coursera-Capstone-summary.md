@@ -29,4 +29,7 @@ The core data is as follows:
   - Explore all Foursquare Venue information in proximity for each Latitude & Longitude  
      - Additional information for Trending venues
      - Calculate the average rating for restaurants to feed into location category
-  - Location category based on the number and rating of venues inside the search radius
+  - Assign a Location category based on the number and rating of venues inside the search radius.  Location Category initial suggestion.
+    -  **No Plan Needed**  For location with lots of options, indicating you can make a choice spontaneously at the location.  If first choice not available, many suitable options close by.  
+    - **Review Options**  For location with some options.  Guidance is to review the options presented and ensure they are suitable.  If  they are not suitable, it would be prudent to make alternative plans.
+    - **Make Alternative Plans**  For locations with few options.  It is unlikely that nearby venues will be satisfactory, so alternative plans should be explored.
