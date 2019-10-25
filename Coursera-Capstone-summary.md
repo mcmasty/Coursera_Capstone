@@ -20,12 +20,13 @@ The solution is for a coach to be able to provide a schedule of events, and get 
 
 #### Part 2: A description of the data and how it will be used to solve the problem.
 
+This focus will be on events held in the USA.
+
 The core data is as follows:
 
-  - Location Information of each event. (e.g. Lawrence Academy, Groton, MA, USA or  Skeetwater Triathlon, Lithia Springs, GA)
+  - Location Information of each event as City & State; e.g. Lawrence Academy, Groton, MA,  or  Skeetwater Triathlon, Lithia Springs, GA, or Boston Marathon, Boston, MA
   - Latitude & Longitude for each location
-  - Explore all Venues in proximity for each Latitude & Longitude  
+  - Explore all Foursquare Venue information in proximity for each Latitude & Longitude  
      - Additional information for Trending venues
      - Calculate the average rating for restaurants to feed into location category
   - Location category based on the number and rating of venues inside the search radius
-  
