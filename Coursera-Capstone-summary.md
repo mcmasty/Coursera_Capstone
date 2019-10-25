@@ -1,5 +1,8 @@
-# Coursera Capstone, IBM Data Specialization
-## Course 9, Week 4 -- "Battle of the Neighborhoods"
+# Coursera Capstone, IBM Data Specialization  
+## Course 9, Week 4 -- "Battle of the Neighborhoods"  
+***  
+
+**NOTE**  Both sections of this assignment are in a single document.
 
 ***  
 
