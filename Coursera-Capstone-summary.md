@@ -14,8 +14,18 @@ Organizations like prep schools, will draw families and students from a wide geo
 Coaches would like friends and families to have enjoyable experiences when they travel to support athletes. The coach is frequently the center point of all the communication to athlete and athlete’s families, and as a result may get frequent questions similar to  “Where’s a good place to eat after the game ?”.
 The problem is that coaches don’t have a simple way to provide a “local guide” for each location on the schedule, and usually don’t have the staff or time available to do this manually.   
 
-The solution is for a coach to be able to provide a schedule of events, and get a “local guide book” for each location on the schedule; listing popular and trending venues in the area.  With a categorization  for each location to indicate if the friends and families need to do additional planning, because the location does not have many options.  The coach can provide all this information to the athletes and their friends and families to help them plan out the travel related to the upcoming events. 
+The solution is for a coach to be able to provide a schedule of events, and get a “local guide book” for each location on the schedule; listing popular and trending venues in the area.  With a categorization  for each location to indicate if the friends and families need to do additional planning, because the location does not have many options.  The coach can provide all this information to the athletes and their friends and families to help them plan out the travel related to the upcoming events.
 
 ***  
 
 #### Part 2: A description of the data and how it will be used to solve the problem.
+
+The core data is as follows:
+
+  - Location Information of each event. (e.g. Lawrence Academy, Groton, MA, USA or  Skeetwater Triathlon, Lithia Springs, GA)
+  - Latitude & Longitude for each location
+  - Explore all Venues in proximity for each Latitude & Longitude  
+     - Additional information for Trending venues
+     - Calculate the average rating for restaurants to feed into location category
+  - Location category based on the number and rating of venues inside the search radius
+  
