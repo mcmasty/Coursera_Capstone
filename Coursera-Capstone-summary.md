@@ -16,7 +16,7 @@ Coaches would like friends and families to have enjoyable experiences when they 
 The core questions from a coach's perspective:  
 (1) Which locations on the schedule have the most options and least options for friends and families ?  Specifically for food, coffee, snacks, etc - services that would be useful for friends and families either before or after a sporting event.
 
-(2) Can each location be labeled in a way to indicate if additional planning is prudent or pragmatic?  These labels would convey total options available at given location to help friends and families in their travel planning.  If there are many options, little additional planning needs to be done; If there are few options, significant additional planning might be need.  
+(2) Can each location be labeled in a way to indicate if additional planning is prudent or pragmatic?  These labels would convey total options available at given location to help friends and families in their travel planning.  If there are many options, little additional planning needs to be done; If there are few options, significant additional planning might be needed.  
 
 (3) Provide a selection of a few the most popular or highly recommended venues in each location.  
 
@@ -37,10 +37,10 @@ This analysis will be limited to sporting events held in the USA.
 The core data elements and potential source of data is as follows:
 
   - Location Information of each event.
-    - Data type is a text, in the form City & State; e.g. Lawrence Academy, Groton, MA,  or  Skeetwater Triathlon, Lithia Springs, GA, or Boston Marathon, Boston, MA
-    - Source of location data will be from coach, or from scraping the online schedules where available.
+    - Data type is a text, in the form of City & State; e.g. Lawrence Academy, Groton, MA,  or  Skeetwater Triathlon, Lithia Springs, GA, or Boston Marathon, Boston, MA
+    - Source of location data will be from a coach, or from scraping the online schedules where available.
   - Latitude & Longitude for each event location.
-    - Data type is double, as in (42.604433, -71.5628436838169), which are the coordinates for Lawrence Academy.
+    - Data type is a pair of decimal numbers, as in (42.604433, -71.5628436838169), which are the coordinates for Lawrence Academy.
     - Source of coordinates will be Open Street Maps Nominatim geocoding service.
   - Venue Information for each location.  
     - Data type for venue information will be JSON Object containing many attributes.  Specific data fields can be explored in the [Foursquare Documentation](https://developer.foursquare.com/docs/api/venues/details)  
@@ -55,4 +55,4 @@ This work includes capturing the data, dealing with missing values, and transfor
 
 This is also the beginning stages of model development, as constructing the models is the confirmation that the data collected is actually 'fit-for-purpose.'  
 
-Data visualizations and numerical summaries (sums, counts, averages, etc) will be the initial tools of analysis.  After the initial analysis is completed, model evaluation for clustering or classification will be done.
+Data visualizations and numerical summaries (sums, counts, averages, etc) will be the initial tools of analysis.  After the initial analysis is completed, model construction and evaluation for clustering or classification models will be done.
