@@ -11,25 +11,48 @@ Youth, high-school, and amateur sporting events take place in many locations.   
 
 Organizations like prep schools, will draw families and students from a wide geographic area. Amateur endurance athletes competing in sports like marathons and triathlons will often use online coaching.  In both cases, the crux is that “local knowledge” about these “away” locations may be unavailable to the coaches, athletes and their families; leaving recommendations for simple things like "where to eat" hard to find.  
 
-Coaches would like friends and families to have enjoyable experiences when they travel to support athletes. The coach is frequently the center point of all the communication to athlete and athlete’s families, and as a result may get frequent questions similar to  “Where’s a good place to eat after the game ?”.
-The problem is that coaches don’t have a simple way to provide a “local guide” for each location on the schedule, and usually don’t have the staff or time available to do this manually.   
+Coaches would like friends and families to have enjoyable experiences when they travel to support athletes. The coach is frequently the center point of all the communication to athlete and athlete’s families, and as a result may get frequent questions similar to  “Where’s a good place to eat after the game ?”. The problem is that coaches don’t have a simple way to provide a “local guide” for each location on the schedule, and usually don’t have the staff or time available to do this manually.   
 
-The solution is for a coach to be able to provide a schedule of events, and get a “local guide book” for each location on the schedule; listing popular and trending venues in the area.  With a categorization  for each location to indicate if the friends and families need to do additional planning, because the location does not have many options.  The coach can provide all this information to the athletes and their friends and families to help them plan out the travel related to the upcoming events.
+The core questions from a coach's perspective:  
+(1) Which locations on the schedule have the most options and least options for friends and families ?  Specifically for food, coffee, snacks, etc - services that would be useful for friends and families either before or after a sporting event.
+
+(2) Can each location be labeled in a way to indicate if additional planning is prudent or pragmatic?  These labels would convey total options available at given location to help friends and families in their travel planning.  If there are many options, little additional planning needs to be done; If there are few options, significant additional planning might be need.  
+
+(3) Provide a selection of a few the most popular or highly recommended venues in each location.  
+
+Answering these questions enables a coach to provide information to assist athletes and their friends and families in travel planning for upcoming sporting events.
 
 ***  
 
 #### Part 2: A description of the data and how it will be used to solve the problem.
 
-This focus will be on events held in the USA.
+**Analytic Approach**   
 
-The core data is as follows:
+Based on the problem description above, the analysis will be focused on descriptive models and patterns.  The ranking question will be analyzed with basic statistical counts and averages.  The location classification and labeling will be analyzed with classification algorithms (decision tree) as well as clustering algorithms to see which model best fit the desired outcome.
 
-  - Location Information of each event as City & State; e.g. Lawrence Academy, Groton, MA,  or  Skeetwater Triathlon, Lithia Springs, GA, or Boston Marathon, Boston, MA
-  - Latitude & Longitude for each location
-  - Explore all Foursquare Venue information in proximity for each Latitude & Longitude  
-     - Additional information for Trending venues
-     - Calculate the average rating for restaurants to feed into location category
-  - Assign a Location category based on the number and rating of venues inside the search radius.  Location Category initial suggestion is to be based solely on restaurants.
-    -  **No Plan Needed**  For locations with many options (9+), indicating you can make a choice spontaneously at the location.  If first choice not available, many suitable options close by.  
-    - **Review Options**  For location with some options (3-8).  Guidance is to review the options presented and ensure they are suitable.  If they are not suitable, it would be prudent to make alternative plans.
-    - **Make Alternative Plans**  For locations with few options (<3).  It is unlikely that nearby venues will be satisfactory, so alternative plans should be explored.
+**Data Collection & Requirements**
+
+This analysis will be limited to sporting events held in the USA.
+
+The core data elements and potential source of data is as follows:
+
+  - Location Information of each event.
+    - Data type is a text, in the form City & State; e.g. Lawrence Academy, Groton, MA,  or  Skeetwater Triathlon, Lithia Springs, GA, or Boston Marathon, Boston, MA
+    - Source of location data will be from coach, or from scraping the online schedules where available.
+  - Latitude & Longitude for each event location.
+    - Data type is double, as in (42.604433, -71.5628436838169), which are the coordinates for Lawrence Academy.
+    - Source of coordinates will be Open Street Maps Nominatim geocoding service.
+  - Venue Information for each location.  
+    - Data type for venue information will be JSON Object containing many attributes.  Specific data fields can be explored in the [Foursquare Documentation](https://developer.foursquare.com/docs/api/venues/details)  
+    - Source Venue information is [Foursquare API](https://developer.foursquare.com/docs)
+
+
+**Data Understanding & Preparation**
+
+The key activity here will be to validate the data set can be constructed, and that the data is accurate and complete.  
+
+This work includes capturing the data, dealing with missing values, and transforming the data into a format that is easy to analyze.
+
+This is also the beginning stages of model development, as constructing the models is the confirmation that the data collected is actually 'fit-for-purpose.'  
+
+Data visualizations and numerical summaries (sums, counts, averages, etc) will be the initial tools of analysis.  After the initial analysis is completed, model evaluation for clustering or classification will be done.
