@@ -1,4 +1,4 @@
-# Improve Travel Planning to Sporting Events for Coaches, Fans, and Families
+# Location Profile and impact to Travel Planning 
 
 # 1. Introduction   
 ## 1.1 Background   
@@ -148,7 +148,7 @@ A basic map of the region was used to get a visual feel for the locations in the
 
 The venue date set contains a 1,037 venues, for 23 locations.  The data has a right-skew.  Many locations have few venue options, while a few locations have many venue options. This right-skew might impact the clustering. 
 
-![Venue Histogram](https://raw.githubusercontent.com/mcmasty/Coursera_Capstone/master/images/all_event_location_venues_hist_1.png  “Venues Histogram”)**Venue Histogram**  
+![Venue Histogram](https://raw.githubusercontent.com/mcmasty/Coursera_Capstone/master/images/all_event_location_venues_hist_1.png  "Venues Histogram")**Venue Histogram**  
 
 
 
@@ -156,7 +156,8 @@ The venue date set contains a 1,037 venues, for 23 locations.  The data has a ri
 
 There are two dimensions when analyzing travel, distance and duration.
 
-![Travel Histogram](https://raw.githubusercontent.com/mcmasty/Coursera_Capstone/master/images/away_location_driving_hist_1.png   “Travel Histogram”)**Travel Histogram*   
+![Travel Histogram](https://raw.githubusercontent.com/mcmasty/Coursera_Capstone/master/images/away_location_driving_hist_1.png   "Travel Histogram")   
+**Travel Histogram**    
 
 The distance and duration plots seem like they will cluster relatively smoothly.  The data does not have a dominate skew right or left. No bin in the histogram has more than 5 locations. This data should not be too challenging to work with.
 
@@ -165,37 +166,112 @@ The distance and duration plots seem like they will cluster relatively smoothly.
 
 One of the goals of this analysis is to assign labels to groups of locations which indicate how many venues will be useful to travelers.  This naturally leads for a heavy bias towards “Food” venues.  
 
-Foursquare has 10 Top-Level categories and the data has been rolled to the highest level. It is possible to then cluster on 10 features, one for each top-level category.  However, the dataset only has data for 8 top-level categories.
+Foursquare has 10 Top-Level categories and the data has been rolled to the highest level. It is possible to then cluster on 10 features, one for each top-level category.  However, the dataset only has data for 8 top-level categories.  That is, there are no venues for the following Top-Level categories `Professional & Other Places` or `Residences`. 
 
 Knowing that “Food” will hold the most sway begs the question, will using all 8 features result in over-fitting the model ?  Or even more pragmatically, is there benefit to the added sophistication ?
 
-The question if clustering on single venue, Top-Level Category 
+Since a single feature carries more weight, perhaps a simple cut (binning) approach will be "good enough".  Will clustering on what appears to be low value features impact the accuracy ?
 
-Based on binning
-Based on Means
-Model Selection
+To explore these questions 4 different models were run:  
+
+- Binning, with 3 bins  
+- Binning, with 4 bins  
+- K-Means, with k=3   
+- K-Means, with k=4
+
+**NOTE**  For K-Means an "elbow" analysis was completed.
+
+![Elbow Analysis](https://raw.githubusercontent.com/mcmasty/Coursera_Capstone/master/images/kmeans_elbow_analysis.png "K-Means Elbow Analysis")**K-Means Elbow Analysis Plot**  
+
+The plot of multiple K-values shows that k=3 would be considered the recommended choice.  
+
+**Model Evalutaion**   
+
+Since binning, won't feed into standard model evaluation tool, the following methodology was used for model comparisons.  
+
+  - Average "Weight" of the cluster  
+  - Clustering "Balance"  
+
+The calculation for Weight of a cluster is calculated by taking the difference between the location with most venues and the location with least venues and multiplying by the number of locations in that cluster.  Then find the average cluster weights for all clusters in that model. The lower the "Average Weight", the more densely packed the clusters are. 
+
+Clustering "balance" is calculated by difference is maximum cluster size and minimum cluster size.  It will be of little pragmatic use, if the cluster doesn't create subdivision with in the data set. To illustrate this point, image 3 clusters in the model, cluster "A" has 1 location,  cluster "B" has 1 location, cluster "C" has 22 locations.  This model doesn't really help you plan. For this metric, smaller is preferred.  
 
 
-### 3.2.5  Geodesic Distance from Venue to Event Location 
+#### Model Comparison  
+| Model         |  Avg. Weight | Balance  |  
+|----------------|:-----------------:|:-----------:|  
+| Binning (bins=3) |     114.0           |       8       |  
+| Binning(bins=4)  |     54.75           |      6        |  
+| KMeans(k=3)  |     114.0           |     8         |  
+|KMeans(k=4)    |    54.25          |      4         |  
+
+ 
+Its clear the model configuration with cluster / bucket size = 4, outperformance cluster / bucketloads size of 3.  And K-Means, K=4 appears to have more balanced model.  Lets look at the two leading models.
 
 
-### 3.2.6  Venue Ratings
+This table compares the venue options label with count of locations with that label.  That is, how many locations have very few options (== `Slim Pickins`) 
+
+
+| Label | KMeans(k=4) | Binning(bins=4) |
+|-----|:----:|:----:|
+| Slim Pickins |  8 |   10  |
+| A Few |   5  |    5  |  
+| Some  |   6  |    4   |
+| Lots    |   4  |   4    |
+
+
+K-Menans(k=4), is the best model in the analysis and is used to assign the labels for all clusters.
+
+
+### 3.2.5  Extra Location - Venue Analysis  
+
+Two additional types of data were collected.  
+
+![Extra Location Analysis](https://raw.githubusercontent.com/mcmasty/Coursera_Capstone/master/images/venue_radius_and_ratings.png  "Extra Location Analysis")  
+
+
+  1. Geodesic Distance from Venue to Event Location.  Which is the shortest distance "as the crow flies" to the event location    
+
+  The further you get from an event location, the more options there tends to be. This is not surprising since the data set is list of high schools, and most high school campuses do not have many external venues operating on the campus. I would expect this pattern to be true of many event locations. 
+
+
+  2.  Venue Ratings   
+
+  With the limited access to the premium Foursquare API, most venue's do not have any rating data. At this time, due to the large amount of missing data, no analysis will incorporate rating data.
+
 
 
 
 # 4. Results 
 
-Was able to produce useful labels
+
+The approach was generally useful and it is easy to tell which locations require additional planning would be pragmatic.  Below is a table of all the results, pulling in the label for how far the drive is, combined with the location labels from the K-Means(k=4) model.
+
+![Table of Away Games](https://raw.githubusercontent.com/mcmasty/Coursera_Capstone/master/images/table_away_games.png)  
 
 
-# 5 Discussion  
 
-Good start but 
-- Clean-up some visual displays 
+Below is a heatmap of all locations in the dataset.  It is easy to see the diversity of different locations, so having a short-hand mechanism to group them is useful.
+
+![All Location Heatmap](https://raw.githubusercontent.com/mcmasty/Coursera_Capstone/master/images/venue_school_heatmap.png "All Location Heatmap")  
 
 
-- The routing information led me to consider it might be more useful if personalize by family locations … so that each family gets a report of ‘games closest to me’
 
-- More sophisticated filtering , Vegan, Gluten-Free (assuming Foursquare has available data sets)  (venue filtering)
 
-- Different travel optimizations , such as ‘break the trip in half’ … or ‘longest possible segment’ … or want to see a friend on the way …  (routing option)
+
+
+
+# 5 Discussion & Conclusion  
+
+This analysis is an interesting start to this problem space.   Ideally, I'd like to work closely with families and coaches, to make sure the visuals are useful to the actual end-users.
+
+This analysis should be repeated for a different type of event list, perhaps marathons or a club track-tream, to see if the event locations for other sports conform to the challenges of travel planning explored in this analysis. 
+
+Processing the routing information led me to consider it might be more useful to personalize this analysis based on the location of the actual families, instead of the "Home Location" of the gym.  However, in order to do that, dramatically expands the scope of the data collection and route generation.
+
+Similar to routing personalization, I can envision more personal preferences for venue selection being useful; such as filtering by diet type (vegan, gluten-free, etc)
+
+The last improvement that came to mind was different route preferences and optimizations.  The current assumption is that travelers want the 'longest segment possible', and thus venues near one of the end-points of the trips are preferred. Different travel optimizations would be a nice feature, such as ‘breaking the trip in half’, or 'adding a stop to see a friend on the way'.   
+
+
+Given the limited scope and budget of this project, the analysis produced interesting and useful results with many avenues to continue this work into the future.
