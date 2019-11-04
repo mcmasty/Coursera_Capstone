@@ -1,4 +1,4 @@
-# Location Profile and impact to Travel Planning 
+# Location Profile and Impact to Travel Planning 
 
 # 1. Introduction   
 ## 1.1 Background   
